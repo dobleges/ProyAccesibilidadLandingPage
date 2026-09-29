@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infografía Instagram — Accesibilidad Web (Budgeta)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #16241c;
+      --paper: #f4f6ee;
+      --card-bg: #ffffff;
+      --jade: #2b6a4e;
+      --jade-deep: #1c3f2e;
+      --gold: #c0923b;
+      --gold-soft: #fbf5e8;
+      --line: #d8decb;
+      --muted: #536453;
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-body: 'Public Sans', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0f1813;
+      color: #e5ebe7;
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+    }
+
+    .toolbar {
+      max-width: 1080px;
+      width: 100%;
+      background: #192720;
+      border: 1px solid #2d4538;
+      border-radius: 12px;
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .toolbar h1 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #9fe2c0;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      background: var(--jade);
+      color: #ffffff;
+      border: none;
+      padding: 9px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #398864;
+    }
+
+    .btn-secondary {
+      background: #273b30;
+      color: #d1ded6;
+      border: 1px solid #3c594a;
+    }
+
+    .btn-secondary:hover {
+      background: #334e3f;
+    }
+
+    /* Contenedor exacto para Instagram (1080 x 1080) */
+    .canvas-wrapper {
+      position: relative;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    #instagram-post {
+      width: 1080px;
+      height: 1080px;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 64px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      background-image: 
+        radial-gradient(circle at 100% 0%, rgba(43, 106, 78, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 0% 100%, rgba(192, 146, 59, 0.08) 0%, transparent 40%);
+    }
+
+    /* Header del post */
+    .post-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--jade-deep);
+      color: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+    }
+
+    .brand-text h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--jade-deep);
+      line-height: 1;
+    }
+
+    .brand-text span {
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .badges {
+      display: flex;
+      gap: 10px;
+    }
+
+    .badge {
+      background: var(--jade);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-gold {
+      background: var(--gold-soft);
+      color: #835c17;
+      border: 1px solid #ebd39f;
+    }
+
+    /* Bloque central de título */
+    .title-block {
+      margin: 28px 0 32px;
+      text-align: center;
+    }
+
+    .title-block .tagline {
+      display: inline-block;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .title-block h3 {
+      font-family: var(--font-display);
+      font-size: 3.1rem;
+      font-weight: 700;
+      line-height: 1.12;
+      color: var(--jade-deep);
+      margin-bottom: 12px;
+    }
+
+    .title-block p {
+      font-size: 1.25rem;
+      color: var(--muted);
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* Grilla de 4 pilares */
+    .grid-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      flex-grow: 1;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 26px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      box-shadow: 0 4px 14px rgba(22, 36, 28, 0.04);
+      position: relative;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .icon-box {
+      width: 54px;
+      height: 54px;
+      background: #eef4f0;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--jade);
+      font-size: 1.7rem;
+      flex-shrink: 0;
+    }
+
+    .icon-box.gold {
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .card-number {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      color: #92a392;
+      font-weight: 700;
+    }
+
+    .card h4 {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .card p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .card-code {
+      margin-top: auto;
+      background: #f5f6f2;
+      border-left: 3px solid var(--jade);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--jade-deep);
+    }
+
+    .card-code.gold-border {
+      border-left-color: var(--gold);
+      color: #815711;
+    }
+
+    /* Footer del post */
+    .post-footer {
+      border-top: 2px solid var(--line);
+      padding-top: 20px;
+      margin-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--jade);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .author-meta strong {
+      display: block;
+      font-size: 1.05rem;
+      color: var(--ink);
+    }
+
+    .author-meta span {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .cta-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--jade-deep);
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .cta-badge svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    /* Estilo para pantalla pequeña / zoom out para previsualizar */
+    @media (max-width: 1120px) {
+      .canvas-wrapper {
+        transform: scale(0.65);
+        transform-origin: top center;
+        margin-bottom: -350px;
+      }
+    }
+    @media (max-width: 740px) {
+      .canvas-wrapper {
+        transform: scale(0.35);
+        margin-bottom: -680px;
+      }
+    }
+
+    /* Modal o ayuda de exportación */
+    .instructions {
+      max-width: 1080px;
+      width: 100%;
+      background: #18251e;
+      border: 1px solid #2d4538;
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 35px;
+      line-height: 1.6;
+    }
+
+    .instructions h3 {
+      color: #9fe2c0;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .instructions ol {
+      padding-left: 20px;
+      color: #c4d4cc;
+    }
+
+    .instructions li {
+      margin-bottom: 8px;
+    }
+
+    .instructions code {
+      background: #0d1712;
+      color: #f1cb7c;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de control superior -->
+  <div class="toolbar">
+    <div>
+      <h1>📱 Plantilla de Infografía para Instagram (1080 x 1080 px)</h1>
+      <span style="font-size: 0.85rem; color: #8fa89b;">Proyecto: Budgeta — Accesibilidad Web (a11y)</span>
+    </div>
+    <div class="toolbar-actions">
+      <button class="btn btn-secondary" onclick="window.print()">🖨️ Guardar como PDF / Imprimir</button>
+      <button class="btn" onclick="copiarTextoPost()">📋 Copiar Copy para Instagram</button>
+    </div>
+  </div>
+
+  <!-- Contenedor del Post de Instagram -->
+  <div class="canvas-wrapper">
+    <div id="instagram-post">
+
+      <!-- Header -->
+      <header class="post-header">
+        <div class="brand">
+          <div class="brand-icon">B</div>
+          <div class="brand-text">
+            <h2>Budgeta</h2>
+            <span>Diseño Web Inclusivo</span>
+          </div>
+        </div>
+        <div class="badges">
+          <span class="badge">WCAG 2.1 AA</span>
+          <span class="badge badge-gold">a11y</span>
+        </div>
+      </header>
+
+      <!-- Bloque central de título -->
+      <section class="title-block">
+        <span class="tagline">Guía práctica de desarrollo frontend</span>
+        <h3>Accesibilidad Web: 4 Claves Imprescindibles</h3>
+        <p>Cómo diseñar y programar pensando en el 100% de los usuarios reales.</p>
+      </section>
+
+      <!-- 4 Pilares en cuadrícula -->
+      <div class="grid-pillars">
+
+        <!-- Pilar 1 -->
+        <article class="card">
+          <span class="card-number">01</span>
+          <div class="card-top">
+            <div class="icon-box">🎧</div>
+            <div>
+              <h4>Lectores de Pantalla</h4>
+            </div>
+          </div>
+          <p>Estructura HTML5 semántica (<code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>) y atributos ARIA como <code>aria-expanded</code> y feedback de error en tiempo real.</p>
+          <div class="card-code">role="region" · aria-live="polite"</div>
+        </article>
+
+        <!-- Pilar 2 -->
+        <article class="card">
+          <span class="card-number">02</span>
+          <div class="card-top">
+            <div class="icon-box gold">⌨️</div>
+            <div>
+              <h4>Navegación por Teclado</h4>
+            </div>
+          </div>
+          <p>Atajo directo mediante <strong>Skip Link</strong> para saltar al contenido principal e indicador de foco visible (<code>:focus-visible</code>) con halo dorado de alto contraste.</p>
+          <div class="card-code gold-border">:focus-visible { outline: 3px solid; }</div>
+        </article>
+
+        <!-- Pilar 3 -->
+        <article class="card">
+          <span class="card-number">03</span>
+          <div class="card-top">
+            <div class="icon-box gold">👁️</div>
+            <div>
+              <h4>Contraste y Tamaño de Texto</h4>
+            </div>
+          </div>
+          <p>Cumplimiento estricto del ratio de contraste mínimo <strong>4.5:1</strong>. Incorpora modo de alto contraste asistido y conmutador de aumento de fuente tipográfica (A+).</p>
+          <div class="card-code gold-border">WCAG AA · Ratio 4.5:1 · Modo A+</div>
+        </article>
+
+        <!-- Pilar 4 -->
+        <article class="card">
+          <span class="card-number">04</span>
+          <div class="card-top">
+            <div class="icon-box">⚡</div>
+            <div>
+              <h4>Movimiento Reducido</h4>
+            </div>
+          </div>
+          <p>Respeto a las preferencias del sistema del usuario a través de media query para evitar mareos o fatiga en personas con sensibilidad vestibular.</p>
+          <div class="card-code">@media (prefers-reduced-motion: reduce)</div>
+        </article>
+
+      </div>
+
+      <!-- Footer del post -->
+      <footer class="post-footer">
+        <div class="author-info">
+          <div class="author-avatar">G</div>
+          <div class="author-meta">
+            <strong>Gabriel Gallo · @dobleges</strong>
+            <span>Tecnicatura Superior en Desarrollo de Software · ISVR</span>
+          </div>
+        </div>
+
+        <div class="cta-badge">
+          <span>Ver código en GitHub</span>
+          <svg viewBox="0 0 24 24">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- Instrucciones de exportación -->
+  <div class="instructions">
+    <h3>💡 ¿Cómo exportar esta infografía en alta resolución para Instagram?</h3>
+    <ol>
+      <li><strong>Opción 1 (Captura de pantalla rápida en Windows):</strong> Presiona <code>Win + Shift + S</code>, selecciona el cuadrado de la infografía y pégala o guárdala como imagen PNG.</li>
+      <li><strong>Opción 2 (Captura de nodo perfecta en Chrome/Edge a 1080p):</strong>
+        Presiona <code>F12</code> (Herramientas de Desarrollador) -> Presiona <code>Ctrl + Shift + P</code> -> Escribe <code>Capture node screenshot</code> seleccionando el elemento con id <code>#instagram-post</code>. Se descargará automáticamente una imagen PNG perfecta de 1080x1080 píxeles.
+      </li>
+      <li><strong>Opción 3 (Imprimir / PDF):</strong> Haz clic en el botón superior <strong>"🖨️ Guardar como PDF / Imprimir"</strong>.</li>
+    </ol>
+  </div>
+
+  <script>
+    function copiarTextoPost() {
+      const copyText = `¿Tu web la puede usar cualquier persona? 🌐♿
+
+La accesibilidad web (a11y) no es una opción ni un agregado decorativo al final: es un derecho fundamental y una buena práctica de ingeniería de software.
+
+En este proyecto desarrollé la Landing Page accesible para "Budgeta" (gestor de finanzas personales), aplicando los estándares internacionales WCAG 2.1 nivel AA.
+
+Aquí las 4 claves principales que implementamos:
+
+1️⃣ Lectores de Pantalla: Estructura HTML5 semántica y atributos ARIA para que personas con discapacidad visual naveguen con total autonomía.
+2️⃣ Navegación por Teclado: Skip Link ("Saltar al contenido principal") y foco visible (:focus-visible) para quienes no utilizan ratón.
+3️⃣ Contraste & Tamaño de Fuente: Ratio de color superior a 4.5:1, switch de alto contraste y tamaño de letra ampliable (A+).
+4️⃣ Movimiento Reducido: Soporte a prefers-reduced-motion para respetar la sensibilidad vestibular.
+
+💻 Código libre y documentación completa en GitHub:
+🔗 github.com/dobleges/ProyAccesibilidadLandingPage
+
+¿Ya estás aplicando a11y en tus proyectos? ¡Te leo en comentarios! 👇
+
+---
+#AccesibilidadWeb #A11y #DesarrolloWeb #Frontend #WebDevelopment #UXUI #WCAG #HTML5 #CSS3 #JavaScript #InclusionDigital #ISVR #Programacion`;
+
+      navigator.clipboard.writeText(copyText).then(() => {
+        alert("¡Texto y hashtags para Instagram copiados al portapapeles!");
+      }).catch(() => {
+        prompt("Copia el texto para tu publicación de Instagram:", copyText);
+      });
+    }
+  </script>
+</body>
+</html>

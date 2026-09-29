@@ -616,17 +616,19 @@ El proyecto utiliza variables CSS para controlar los principales colores:
 También existe un tema de alto contraste:
 
 ```css
-body.contrast-alto{
+body.contrast-alto,
+body.contraste-alto{
   --paper:#ffffff;
   --paper-raised:#ffffff;
   --ink:#000000;
-  --jade:#0b3d26;
+  --jade:#004d26;
   --jade-deep:#000000;
   --jade-deeper:#000000;
-  --gold:#8a5a00;
+  --gold:#7a4f00;
   --line:#000000;
-  --muted:#1a1a1a;
-  --error:#8a1f0a;
+  --muted:#111111;
+  --error:#900000;
+  --focus:#000000;
 }
 ```
 
@@ -656,29 +658,31 @@ La relación de contraste definitiva debe verificarse mediante herramientas espe
 ### Código implementado
 
 ```css
-body.texto-grande{
-  font-size:1.18rem;
-}
+html.texto-normal, body.texto-normal{ font-size:100%; }
+html.texto-grande, body.texto-grande{ font-size:118%; }
+html.texto-muy-grande, body.texto-muy-grande{ font-size:136%; }
 ```
 
-La clase se activa mediante JavaScript:
+El control accesible utiliza un menú desplegable accesible con opciones `role="menuitemradio"` y `aria-checked`:
 
-```javascript
-var activo = document.body.classList.toggle('texto-grande');
-
-btnTexto.setAttribute(
-  'aria-pressed',
-  activo ? 'true' : 'false'
-);
+```html
+<button id="btn-texto" aria-haspopup="true" aria-expanded="false" aria-controls="menu-tamanos">
+  Texto: <strong id="lbl-tamano-actual">Normal</strong>
+</button>
+<div id="menu-tamanos" role="menu" hidden>
+  <button class="opt-tamano" role="menuitemradio" aria-checked="true" data-size="normal">Normal (100%)</button>
+  <button class="opt-tamano" role="menuitemradio" aria-checked="false" data-size="grande">Grande (118%)</button>
+  <button class="opt-tamano" role="menuitemradio" aria-checked="false" data-size="muy-grande">Muy grande (136%)</button>
+</div>
 ```
 
 ### Explicación técnica
 
-La página permite aumentar el tamaño base del texto mediante un control específico.
+La página permite seleccionar entre tres niveles de tamaño de texto (Normal, Grande y Muy grande) mediante un menú desplegable totalmente operable por teclado (flechas arriba/abajo, Enter, Escape).
 
-La utilización de unidades relativas y `clamp()` en diferentes elementos contribuye a que el contenido pueda adaptarse a diferentes tamaños de pantalla.
+Al cambiar el tamaño, la escala se aplica al elemento raíz (`html`), garantizando que todos los elementos que utilizan unidades `rem` escalen de forma armónica y proporcional.
 
-También se permite utilizar el zoom proporcionado por el navegador.
+Asimismo, se incorporaron reglas de diseño adaptativo con `auto-fit` y `minmax()` para que la página conserve intacta su organización y distribución visual sin desbordamientos ni solapamientos, incluso con el tamaño máximo de texto activado.
 
 ---
 
